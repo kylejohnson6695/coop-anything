@@ -56,3 +56,61 @@ Session 1 (2026-10-24). Phase 0 (triage) and a first pass of phase 1 (research).
   owner installs following the official guides.
 - NV:MP co-op hosting: local story server on port 27015, Radmin VPN to avoid port forwarding,
   everyone needs identical mods and load order. https://nuwiki.nv-mp.com/wiki/Hosting_CO:OP
+
+## Session 1b: extending fnv-coop to TTW (owner chose shared quest progress)
+
+### Observations (ran here, 2026-10-24)
+
+- fnv-coop @ commit of 2026-10-23: `python -I tools/test_all.py --quick` → ALL SUITES PASS on Linux
+  (C++ and game-dependent suites SKIP, as documented).
+- fnv-coop names records as `Plugin.esm:LOCALID` and resolves runtime FormIDs from the live mod
+  list (`plugin/dialogue/engine/engine_xnvse.cpp`); quest rules are keyed by quest EditorID
+  (`docs/quest-policies/rules.json`). Neither assumes a fixed load order at runtime.
+- Hard-coded New Vegas plugin lists: `tools/questdata/extract.py` `PLUGINS`, and
+  `tools/questdata/loadorder.json` (used by test tooling for console FormIDs).
+- `tools/questdata/extract.py`, `effects.py`, `classify.py` run unchanged on **vanilla** Fallout 3
+  GOTY ESMs (`--plugins Fallout3.esm,Anchorage.esm,ThePitt.esm,BrokenSteel.esm,PointLookout.esm,Zeta.esm`):
+  294 quests (136 with stages/objectives), 1,343 stages, 28,606 INFOs, 8,490 result scripts, ~8 s.
+  New Vegas has rules for 483 quests, for scale.
+- Story-quest risk tiers (vanilla FO3 + DLC, 136 story quests): T0 12, T1 15, T2 16, T3 56, T4 37.
+  Riskiest are the Vault 101 childhood (CG02, CG03, CG04), Tranquility Lane (MQ04), Wasteland
+  Survival Guide (MS03), The Replicated Man (MS08), and the DLC openers.
+- 17 FO3 quest EditorIDs also exist in New Vegas' rules (leftovers in FalloutNV.esm):
+  AchievementQuest, AudioHolotapes, BH01, CG00, CG02, CGTutorial, ControlRumble, Doctors,
+  FFradioSignals02, Followers, FollowersHireRL3, Generic, HD00JukeboxMusic, HD00RobotsDialog,
+  RadioTenpenny, RadioVault101PA, WaterBeggars.
+- Generated data lives in `local/fo3-questdata/` (game-derived, never committed).
+
+### Derived
+
+- TTW support is mostly a data and rules job, not an engine port: same exe (FalloutNV.exe
+  1.4.0.525), same xNVSE plugin, plugin-qualified IDs.
+- EditorID keys are ambiguous under TTW for the 17 clashing names (unless TTW renamed them):
+  rules need a plugin-qualified key or a TTW-specific rules file.
+
+### Guesses (unverified)
+
+- The TTW installer rewrites Fallout3.esm and TaleOfTwoWastelands.esm overrides many FO3 quests,
+  so the real counts and tiers will differ from vanilla. Re-run on TTW's generated ESMs.
+- TTW scripts use JIP LN NVSE functions that fnv-coop's hooks may not capture; check
+  `vocab_gaps.md` on TTW data.
+- `SetQuestVar` tops the "not in vocabulary" list (5,345 scripts); likely the parser's name for
+  `set Quest.var to x`. Need the same report on New Vegas data to compare.
+
+### Plan
+
+1. Owner installs TTW per the official guide (needed for real data and every in-game step).
+2. Stage TTW's ESMs read-only, re-run the questdata pipeline with a TTW plugin list
+   (FNV + DLC, Fallout3.esm + DLC, TaleOfTwoWastelands.esm, YUPTTW.esm).
+3. fnv-coop changes, as a branch/PR to fnv-coop: make the plugin list and load order a profile
+   (`fnv` / `ttw`), plugin-qualified rule keys for clashes, `rules.ttw.json`.
+4. Auto-generate draft rules for FO3 quests with the existing coverage tools; hand-curate the
+   T4 set (Vault 101 childhood first: it runs before anyone leaves the vault).
+5. In-game proofs on the owner's PC (two game copies, the existing bridge): needs MSVC build
+   and a shell on the owner's PC; not possible from the cloud workspace alone.
+6. Give back: TTW notes into fnv-coop docs, Fallout 3 directory entry + write-up here.
+
+### Unknown
+
+- Whether fnv-coop's maintainer wants TTW in the same repo or a fork; ask in a claim issue.
+- Whether TTW keeps FO3 EditorIDs unchanged.
