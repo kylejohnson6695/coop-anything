@@ -114,3 +114,13 @@ Session 1 (2026-10-24). Phase 0 (triage) and a first pass of phase 1 (research).
 
 - Whether fnv-coop's maintainer wants TTW in the same repo or a fork; ask in a claim issue.
 - Whether TTW keeps FO3 EditorIDs unchanged.
+
+## Session 2 (2026-10-27): TTW installed on owner's PC
+
+- Observed: TTW 3.4 installer completed from Steam FO3 GOTY 1.7.0.4 + FNV 1.4.0.525 (resolves the
+  "Unknown" above: the Steam 1.7.0.4 build works with the TTW 3.4 installer). Output ≈17 GB.
+- Observed: MO2 2.5.2-ML1.5 TTW instance, load order of 18 masters matches the installer's list.
+- Note for fnv-coop testing: FalloutNV.exe is now 4GB-patched (sha256 changes); test installs
+  must be copies, never the owner's install.
+- Next (plan step 2): stage TTW's generated ESMs read-only and re-run questdata with the TTW
+  plugin list.
