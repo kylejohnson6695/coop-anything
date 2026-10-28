@@ -128,4 +128,4 @@ Session 1 (2026-10-24). Phase 0 (triage) and a first pass of phase 1 (research).
   Tweaks < 9.41, ShowOff xNVSE < 1.80, or FalloutCustom.ini lacks the guide settings. Without
   the INI's `SCharGenQuest=001FFFF8` the game does not start at the Fallout 3 birth. So the
   minimal TTW mod set for co-op is: TTW, YUPTTW, TTWNVSE, JIP LN (+INI), Stewie Tweaks (+VNV INI),
-  ShowOff, and the guide's FalloutCustom.ini — not just TTW + xNVSE plugins.
+  ShowOff, JohnnyGuitar NVSE (>=5.01), and the guide's FalloutCustom.ini — not just TTW + xNVSE plugins.
