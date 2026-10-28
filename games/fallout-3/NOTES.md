@@ -124,3 +124,8 @@ Session 1 (2026-10-24). Phase 0 (triage) and a first pass of phase 1 (research).
   must be copies, never the owner's install.
 - Next (plan step 2): stage TTW's generated ESMs read-only and re-run questdata with the TTW
   plugin list.
+- Observed (owner's first launch): TTW 3.4 checks at the main menu and warns if lStewieAl's
+  Tweaks < 9.41, ShowOff xNVSE < 1.80, or FalloutCustom.ini lacks the guide settings. Without
+  the INI's `SCharGenQuest=001FFFF8` the game does not start at the Fallout 3 birth. So the
+  minimal TTW mod set for co-op is: TTW, YUPTTW, TTWNVSE, JIP LN (+INI), Stewie Tweaks (+VNV INI),
+  ShowOff, and the guide's FalloutCustom.ini — not just TTW + xNVSE plugins.
