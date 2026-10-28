@@ -132,3 +132,9 @@ Session 1 (2026-10-24). Phase 0 (triage) and a first pass of phase 1 (research).
 - Observed (owner, 2026-10-27 21:34): with the 9 mods + guide FalloutCustom.ini, TTW 3.4 starts a
   new game at the Fallout 3 birth with no dependency warnings. Single-player install verified by
   the owner launching it; NV:MP not installed yet.
+- Observed: NV:MP client 9.43 (`build_release_client.zip`, SHA-256
+  `7c082584bca9b1e2548c23223da912906b7fa2eee955fb6c2454cc02ccc385aa`, matches the GitHub release
+  digest, https://github.com/NVMP/ClientDistribution/releases/tag/9.43) adds only new files to the
+  FNV root (launcher, story server, `nvmp/`, OpenSSL, Discord SDK, 7-Zip); it does not replace xNVSE
+  6.4.9 or the root steam_api.dll. Installed alongside the TTW MO2 setup with the launcher added
+  as an MO2 executable (Hosting TTW guide). Co-op connection not yet tested.
