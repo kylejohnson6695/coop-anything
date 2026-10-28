@@ -143,3 +143,31 @@ Session 1 (2026-10-24). Phase 0 (triage) and a first pass of phase 1 (research).
   notice: TTW detects NV:MP, calls it unsupported, and asks the player to accept forfeiting TTW
   support before continuing. It is a policy notice, not a load failure. Not yet tested: a second
   player joining, gameplay sync.
+
+## Session 3 (2026-10-27): TTW quest data and draft rules (fnv-coop branch `ttw-profile`, local)
+
+### Observations (ran here, on read-only copies of the owner's TTW 3.4 + YUPTTW 13.9.1 ESMs)
+- 18 masters, 917 quests, 258 quest overrides (TaleOfTwoWastelands.esm 152, YUPTTW.esm 81,
+  Fallout3.esm 15, others 10). Extract ~11 s.
+- The 17 FO3/FNV EditorID "clashes" from session 1 are not duplicates in TTW: TTW's Fallout3.esm
+  overrides the FalloutNV.esm leftover records (CG00, CG02, Followers, Generic, ...). No duplicate
+  EditorIDs among TTW quests, so EditorID-keyed rules work unchanged.
+- fnv-coop's extractor kept the base record and ignored overrides; for TTW that analyses New Vegas
+  stubs instead of the real Fallout 3 quests. Fixed with `--profile ttw` / `--resolve-overrides`
+  (winning record = last loaded). Default New Vegas behaviour unchanged; 92 questdata tests pass,
+  mutation check fails the new tests as expected; `tools/test_all.py --quick` ALL SUITES PASS.
+- With winning records: 370 story quests; T0 18, T1 36, T2 40, T3 162, T4 114. The winning version
+  of most story quests is in TaleOfTwoWastelands.esm (98) or YUPTTW.esm (71), including many New
+  Vegas quests.
+- Rule pipeline (tools/coverage, no New Vegas questline patches): 276 quests, 1,115 rules,
+  0 validation errors; 52 tethers + 7 warps pending (no resolvable cell/marker).
+- Runtime data for the plugin (`gen_coop_data.py --qdata --rules`): 9,833 EditorIDs, 14,773
+  INFO->quest links. The C++ plugin loads these files, so no C++ change was needed so far.
+- 917 scenarios with TTW runtime IDs (e.g. MQ01 = 06014E87, Fallout3.esm at slot 06).
+
+### Guesses (unverified)
+- The plugin may run TTW unchanged with the TTW data files; untested (needs MSVC build + game).
+- 44 rule entries reuse New Vegas hand curation by EditorID; TTW versions may differ.
+
+### Not done (needs the owner's PC)
+- Build nvcoop.dll (MSVC x86), confirm TTW load order with the bridge, two-copy stage sweep.
