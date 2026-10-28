@@ -129,3 +129,6 @@ Session 1 (2026-10-24). Phase 0 (triage) and a first pass of phase 1 (research).
   the INI's `SCharGenQuest=001FFFF8` the game does not start at the Fallout 3 birth. So the
   minimal TTW mod set for co-op is: TTW, YUPTTW, TTWNVSE, JIP LN (+INI), Stewie Tweaks (+VNV INI),
   ShowOff, JohnnyGuitar NVSE (>=5.01), and the guide's FalloutCustom.ini — not just TTW + xNVSE plugins.
+- Observed (owner, 2026-10-27 21:34): with the 9 mods + guide FalloutCustom.ini, TTW 3.4 starts a
+  new game at the Fallout 3 birth with no dependency warnings. Single-player install verified by
+  the owner launching it; NV:MP not installed yet.
