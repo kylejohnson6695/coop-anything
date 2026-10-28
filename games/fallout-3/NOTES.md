@@ -138,3 +138,8 @@ Session 1 (2026-10-24). Phase 0 (triage) and a first pass of phase 1 (research).
   FNV root (launcher, story server, `nvmp/`, OpenSSL, Discord SDK, 7-Zip); it does not replace xNVSE
   6.4.9 or the root steam_api.dll. Installed alongside the TTW MO2 setup with the launcher added
   as an MO2 executable (Hosting TTW guide). Co-op connection not yet tested.
+- Observed (owner, 2026-10-27 21:51): NV:MP 9.43 launched through MO2 connects to its own local
+  story server ("Connected [21ms]") with the TTW setup. TTW 3.4 then shows an "Incompatible mod!"
+  notice: TTW detects NV:MP, calls it unsupported, and asks the player to accept forfeiting TTW
+  support before continuing. It is a policy notice, not a load failure. Not yet tested: a second
+  player joining, gameplay sync.
